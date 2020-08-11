@@ -1,7 +1,11 @@
-use sfml::{graphics::{self, RenderTarget,
-    Transformable,}, system, window};
+use sfml::{
+    graphics::{self, RenderTarget, Transformable},
+    system, window,
+};
 
 fn main() {
+    let font = graphics::Font::from_file(&check_resource("sansation.ttf")).unwrap();
+
     let mut window = graphics::RenderWindow::new(
         (800, 600),
         "SFML test - mouse & text",
@@ -11,8 +15,6 @@ fn main() {
     window.set_mouse_cursor_visible(false);
     window.set_framerate_limit(60);
 
-    let font = graphics::Font::from_file(
-        &get_resource_path("sansation.ttf")).unwrap();
     let mut circle = graphics::CircleShape::new(4., 30);
     let mut texts: Vec<graphics::Text> = Vec::new();
     let mut mp_text = graphics::Text::new("", &font, 14);
@@ -40,26 +42,24 @@ fn main() {
                 window::Event::MouseButtonReleased { button, x, y } => {
                     add_text!(x, y, "Releaseed: {:?}, {}, {}", button, x, y);
                 }
-                window::Event::KeyPressed { code, .. } => {
-                    match code {
-                        window::Key::W => window.set_mouse_position(system::Vector2i::new(400, 300)),
-                        window::Key::D => {
-                            let dm = window::VideoMode::desktop_mode();
-                            let center = system::Vector2i::new(
-                            dm.width as i32 / 2, dm.height as i32 / 2);
-                            window::mouse::set_desktop_position(center);
-                        },
-                        window::Key::V => {
-                            is_cursor_visible = !is_cursor_visible;
-                            window.set_mouse_cursor_visible(is_cursor_visible);
-                        },
-                        window::Key::G => {
-                            is_grabbed = !is_grabbed;
-                            window.set_mouse_cursor_grabbed(is_grabbed);
-                        },
-                        window::Key::E => break 'main_loop,
-                        _ => {}
+                window::Event::KeyPressed { code, .. } => match code {
+                    window::Key::W => window.set_mouse_position(system::Vector2i::new(400, 300)),
+                    window::Key::D => {
+                        let dm = window::VideoMode::desktop_mode();
+                        let center =
+                            system::Vector2i::new(dm.width as i32 / 2, dm.height as i32 / 2);
+                        window::mouse::set_desktop_position(center);
                     }
+                    window::Key::V => {
+                        is_cursor_visible = !is_cursor_visible;
+                        window.set_mouse_cursor_visible(is_cursor_visible);
+                    }
+                    window::Key::G => {
+                        is_grabbed = !is_grabbed;
+                        window.set_mouse_cursor_grabbed(is_grabbed);
+                    }
+                    window::Key::E => break 'main_loop,
+                    _ => {}
                 },
                 _ => {}
             }
@@ -87,7 +87,7 @@ fn main() {
         circle.set_position((mp.x as f32, mp.y as f32));
 
         window.clear(graphics::Color::BLACK);
-        
+
         // Move texts up so they won't overlap
         for i in (0..texts.len()).rev() {
             for j in (0..i).rev() {
@@ -118,19 +118,20 @@ fn main() {
 }
 
 // Convert relative file paths to absolute
-fn get_resource_path(file_path: &str) -> String {
-    let mut path_buf = std::env::current_exe().unwrap();
-    path_buf.pop();
-    path_buf.push(file_path);
-    if !std::path::Path::new(&path_buf).exists() {
+fn check_resource(file_path: &str) -> &str {
+    if !std::path::Path::new(&file_path).exists() {
         console_panic(format!("Resource {} doesn't exist!", file_path));
     }
-    path_buf.into_os_string().into_string().unwrap()
+    file_path
 }
 
 // Prints error to console, waits for keypress, then panics
 fn console_panic(error: String) -> ! {
     println!("Error: {}", error);
-    std::process::Command::new("cmd.exe").arg("/c").arg("pause").status().unwrap();
+    std::process::Command::new("cmd.exe")
+        .arg("/c")
+        .arg("pause")
+        .status()
+        .unwrap();
     panic!(error);
 }

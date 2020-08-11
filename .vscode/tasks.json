@@ -12,11 +12,24 @@
 		},
 		{
 			"type": "cargo",
-			"command": "run",
+			"command": "build",
+			"args": [
+				"--release"
+			],
 			"problemMatcher": [
 				"$rustc"
 			],
-			"label": "rust: cargo run"
-		}
+			"group": "build",
+			"label": "rust: cargo build release"
+		},
+		{
+			"type": "cargo",
+			"command": "clean",
+			"problemMatcher": [
+				"$rustc"
+			],
+			"group": "build",
+			"label": "rust: cargo clean"
+		},
 	]
 }
