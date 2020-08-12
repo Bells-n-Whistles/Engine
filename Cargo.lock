@@ -141,8 +141,6 @@ dependencies = [
 [[package]]
 name = "sfml-build"
 version = "0.3.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4f83a1ad7f7c79c9273019b2abfacbd4fa7150d23caca8cae586f0f1ea43b151"
 
 [[package]]
 name = "wasi"
