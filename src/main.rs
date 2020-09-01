@@ -4,7 +4,7 @@ use sfml::{
 };
 
 fn main() {
-    let font = graphics::Font::from_file(&check_resource("sansation.ttf")).unwrap();
+    let font = graphics::Font::from_file(&check_resource("resources\\sansation.ttf")).unwrap();
 
     let mut window = graphics::RenderWindow::new(
         (800, 600),
@@ -40,7 +40,7 @@ fn main() {
                     add_text!(x, y, "Pressed: {:?}, {}, {}", button, x, y);
                 }
                 window::Event::MouseButtonReleased { button, x, y } => {
-                    add_text!(x, y, "Releaseed: {:?}, {}, {}", button, x, y);
+                    add_text!(x, y, "Released: {:?}, {}, {}", button, x, y);
                 }
                 window::Event::KeyPressed { code, .. } => match code {
                     window::Key::W => window.set_mouse_position(system::Vector2i::new(400, 300)),

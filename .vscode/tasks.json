@@ -23,13 +23,28 @@
 			"label": "rust: cargo build release"
 		},
 		{
-			"type": "cargo",
-			"command": "clean",
+			"type": "shell",
+			"command": "cmd /c clean.bat",
 			"problemMatcher": [
 				"$rustc"
 			],
+			"options": {
+                "cwd": "${workspaceFolder}\\target-env"
+            },
 			"group": "build",
 			"label": "rust: cargo clean"
+		},
+		{
+			"type": "shell",
+			"command": "cmd /c repair.bat",
+			"problemMatcher": [
+				"$rustc"
+			],
+			"options": {
+                "cwd": "${workspaceFolder}\\target-env"
+            },
+			"group": "build",
+			"label": "rust: cargo repair"
 		},
 	]
 }
