@@ -1,13 +1,17 @@
+mod resources;
+
 use sfml::{
-    graphics::{self, RenderTarget, Transformable},
-    system, window,
+    graphics::{self, RenderTarget, Transformable, Font, Texture},
+    system::{SfBox, Vector2f, Vector2i}, window,
 };
-use system::Vector2f;
+
+use resources::Resource;
 
 fn main() {
-    let font = graphics::Font::from_file(&check_resource("resources\\sansation.ttf")).unwrap();
-    let grass_texture = graphics::Texture::from_file(&check_resource("resources\\grass.jpg")).unwrap();
-    let stone_texture = graphics::Texture::from_file(&check_resource("resources\\stone.jpg")).unwrap();
+    let font = SfBox::<Font>::load_from("sansation.ttf").unwrap();
+    
+    let grass_texture = SfBox::<Texture>::load_from("grass.jpg").unwrap();
+    let stone_texture = SfBox::<Texture>::load_from("stone.jpg").unwrap();
 
     let mut window = graphics::RenderWindow::new(
         (800, 600),
@@ -66,11 +70,11 @@ fn main() {
                     add_text!(x, y, "Released: {:?}, {}, {}", button, x, y);
                 }
                 window::Event::KeyPressed { code, .. } => match code {
-                    window::Key::W => window.set_mouse_position(system::Vector2i::new(400, 300)),
+                    window::Key::W => window.set_mouse_position(Vector2i::new(400, 300)),
                     window::Key::D => {
                         let dm = window::VideoMode::desktop_mode();
                         let center =
-                            system::Vector2i::new(dm.width as i32 / 2, dm.height as i32 / 2);
+                            Vector2i::new(dm.width as i32 / 2, dm.height as i32 / 2);
                         window::mouse::set_desktop_position(center);
                     }
                     window::Key::V => {
@@ -180,23 +184,4 @@ fn main() {
 
 fn cart2iso(position: Vector2f) -> Vector2f {
     Vector2f::new(400.0 + position.x - position.y, 300.0 - position.x - position.y)
-}
-
-// Convert relative file paths to absolute
-fn check_resource(file_path: &str) -> &str {
-    if !std::path::Path::new(&file_path).exists() {
-        console_panic(format!("Resource {} doesn't exist!", file_path));
-    }
-    file_path
-}
-
-// Prints error to console, waits for keypress, then panics
-fn console_panic(error: String) -> ! {
-    println!("Error: {}", error);
-    std::process::Command::new("cmd.exe")
-        .arg("/c")
-        .arg("pause")
-        .status()
-        .unwrap();
-    panic!(error);
 }
