@@ -1,1 +1,5 @@
-pub fn add(a: u32, b: u32) -> u32 { a + b }
+pub mod resource;
+pub mod window;
+
+pub use sfml::graphics::Sprite;
+pub use window::Window;

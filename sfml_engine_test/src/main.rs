@@ -1,3 +1,6 @@
+use sfml_engine::Window;
+
 fn main() {
-    println!("{}", sfml_engine::add(2, 2));
+    let window = Window::new((800, 600), "Engine");
+    window.main_loop();
 }
