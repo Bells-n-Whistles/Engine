@@ -29,7 +29,7 @@
 				"$rustc"
 			],
 			"options": {
-                "cwd": "${workspaceFolder}\\target-env"
+                "cwd": "${workspaceFolder}\\sfml_engine_test\\target-env"
             },
 			"group": "build",
 			"label": "rust: cargo clean"
@@ -41,7 +41,7 @@
 				"$rustc"
 			],
 			"options": {
-                "cwd": "${workspaceFolder}\\target-env"
+                "cwd": "${workspaceFolder}\\sfml_engine_test\\target-env"
             },
 			"group": "build",
 			"label": "rust: cargo repair"

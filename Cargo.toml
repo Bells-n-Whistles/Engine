@@ -1,14 +1,9 @@
-[package]
-name = "engine"
-version = "0.1.0"
-authors = ["Kostya"]
-edition = "2018"
+[workspace]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
-[dependencies]
-rand = "0.7.3"
-sfml = "0.15.1"
+members = [
+    "sfml_engine",
+    "sfml_engine_test",
+]
 
 [patch.crates-io]
-sfml-build = { path = "sfml-build" }
+sfml-build = { path = "sfml_engine/sfml-build" }

@@ -1,0 +1,8 @@
+[package]
+name = "sfml_engine_test"
+version = "0.1.0"
+authors = ["55AAh <kostya.kulik@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+sfml_engine = { path = "../sfml_engine" }
